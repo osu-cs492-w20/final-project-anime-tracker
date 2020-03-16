@@ -15,8 +15,7 @@ public class KitsuSearchAsyncTask extends AsyncTask<String, Void, String> {
     private Callback mCallback;
 
     public interface Callback {
-        void onSearchFinished(List<AnimeItem> searchResults);
-
+        void onSearchFinished(List<AnimeItem> searchTitleResults);
     }
 
     public KitsuSearchAsyncTask(Callback callback){

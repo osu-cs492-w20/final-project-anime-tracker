@@ -1,5 +1,7 @@
 package com.example.animetracker.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -14,7 +16,7 @@ public class NetworkUtils {
                 .url(url)
                 .build();
         Response response = mHTTPClient.newCall(request).execute();
-
+        Log.d("NetworkUtils", "This is the response:" + response);
         try {
             return response.body().string();
         } finally {

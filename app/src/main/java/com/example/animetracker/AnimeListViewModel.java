@@ -6,12 +6,15 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.animetracker.data.AnimeDatabaseEntry;
+import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.data.AnimeListRepository;
+import com.example.animetracker.data.Status;
 
 import java.util.List;
 
 public class AnimeListViewModel extends AndroidViewModel {
     private AnimeListRepository mRepository;
+
 
     public AnimeListViewModel(Application application) {
         super(application);
@@ -37,4 +40,5 @@ public class AnimeListViewModel extends AndroidViewModel {
     public LiveData<AnimeDatabaseEntry> getAnimeListEntryByName(String id) {
         return mRepository.getAnimeListEntryByName(id);
     }
+
 }

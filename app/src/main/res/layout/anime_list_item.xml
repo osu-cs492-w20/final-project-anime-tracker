@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_weather_icon"
+            android:id="@+id/iv_poster_icon"
             android:padding="8dp"
             android:layout_width="72dp"
             android:layout_height="72dp" />
@@ -30,7 +30,7 @@
                 android:textColor="#000"/>
 
             <TextView
-                android:id="@+id/iv_poster_icon"
+                android:id="@+id/iv_poster_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"

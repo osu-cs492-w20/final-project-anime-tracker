@@ -115,10 +115,12 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
 
     @Override
     public void onAnimeItemClick(AnimeItem anime){
-        Log.d(TAG, "this does nothing");
+        Log.d(TAG, "Anime item has been clicked!");
     }
 
     private void doAnimeTitleSearch(String animeTitle){
         mViewModel.loadTitleSearchResults(animeTitle);
     }
+
+
 }

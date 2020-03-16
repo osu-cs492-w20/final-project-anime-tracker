@@ -38,9 +38,19 @@ public class KitsuUtils {
                 .build()
                 .toString();
     }
+    static class KitsuSearchPages{
+        KitsuSearchLinks links;
+    }
+
+    static class KitsuSearchLinks {
+        String first;
+        String next;
+        String last;
+    }
 
     static class KitsuSearchResults {
         KitsuAnimeItem[] data;
+
     }
 
     static class KitsuAnimeItem {
@@ -80,9 +90,12 @@ public class KitsuUtils {
         String large;
     }
 
+
+
     public static ArrayList<AnimeItem> parseKitsuJSON(String kitsuJSON){
         Gson gson = new Gson();
         KitsuSearchResults results =gson.fromJson(kitsuJSON, KitsuSearchResults.class);
+
         if (results != null && results.data !=null) {
             ArrayList<AnimeItem> animeItems = new ArrayList<>();
 

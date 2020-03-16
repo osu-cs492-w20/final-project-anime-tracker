@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 //import com.example.android.animetracker.data.AnimeItem;
 //import com.example.android.animetracker.data.AnimePreferences;
 //import com.example.android.animetracker.utils.OpenWeatherMapUtils;
@@ -82,12 +82,12 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeItemVie
             );*/
 
             //builds the anime url here
-            //String iconURL = OpenWeatherMapUtils.buildIconURL(animeItem.icon);
+            String iconURL = animeItem.tiny;
             mAnimeTitleTV.setText(titleString);
             //mAnimeDescriptionTV.setText(detailString);
 
             //uses glide to display the image
-            //Glide.with(mWeatherIconIV.getContext()).load(iconURL).into(mWeatherIconIV);
+            Glide.with(mAnimeIconIV.getContext()).load(iconURL).into(mAnimeIconIV);
         }
 
         @Override

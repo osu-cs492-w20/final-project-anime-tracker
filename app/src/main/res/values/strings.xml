@@ -17,4 +17,6 @@
     <string name="search_box_hint">Enter Title</string>
     <string name="search_title_button_text">Search</string>
     <string name="loading_title_error">Ooops, couldn\'t load title search</string>
+
+    <string name="export_anime_list">Export Anime List JSON</string>
 </resources>

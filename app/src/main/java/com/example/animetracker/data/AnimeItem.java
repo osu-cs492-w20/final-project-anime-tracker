@@ -1,6 +1,8 @@
 package com.example.animetracker.data;
 
-public class AnimeItem {
+import java.io.Serializable;
+
+public class AnimeItem implements Serializable {
     public String id;
     public String synopsis;
     public String link;

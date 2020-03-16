@@ -101,7 +101,7 @@ public class KitsuUtils {
                 animeItem.youtubeVideoId = listItem.attributes.youtubeVideoId;
                 animeItem.ja_jp =listItem.attributes.titles.ja_jp;
                 animeItem.en_jp =listItem.attributes.titles.en_jp;
-                
+
                 animeItems.add(animeItem);
             }
             return animeItems;

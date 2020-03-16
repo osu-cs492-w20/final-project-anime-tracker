@@ -10,25 +10,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import com.bumptech.glide.Glide;
+//import com.example.android.animetracker.data.AnimeItem;
 //import com.example.android.animetracker.data.WeatherPreferences;
-import com.example.animetracker.data.AnimeItem;
-import com.example.animetracker.utils.KitsuUtils;
+//import com.example.android.animetracker.utils.OpenWeatherMapUtils;
 
 import java.text.DateFormat;
 
 public class AnimeItemDetailActivity extends AppCompatActivity {
 
-
-    private ImageView mPosterIconIV;
-    private TextView mSynopsisTV;
-    private TextView mTitleTV;
-    private TextView mAverageRatingTV;
-    private TextView mPopularRankTV;
-    private TextView mShowTypeTV;
-    private TextView mStatusTV;
-    private TextView mEpisodeCountTV;
-    private TextView mEpisodeLengthTV;
-    private TextView mYoutubeIDTV;
+    private TextView mDateTV;
+    private TextView mTempDescriptionTV;
+    private TextView mLowHighTempTV;
+    private TextView mWindTV;
+    private TextView mHumidityTV;
+    private ImageView mWeatherIconIV;
 
     private AnimeItem mAnimeItem;
 
@@ -37,47 +32,40 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_item_detail);
 
-
-        mPosterIconIV = findViewById(R.id.iv_poster_icon);
-        mSynopsisTV = findViewById(R.id.tv_synopsis);
-        mTitleTV = findViewById(R.id.tv_title);
-        mAverageRatingTV = findViewById(R.id.tv_avg_rating);
-        mPopularRankTV = findViewById(R.id.tv_popularity_rank);
-        mShowTypeTV = findViewById(R.id.tv_show_type);
-        mStatusTV = findViewById(R.id.tv_status);
-        mEpisodeCountTV = findViewById(R.id.tv_episode_count);
-        mEpisodeLengthTV = findViewById(R.id.tv_episode_length);
-        mYoutubeIDTV = findViewById(R.id.tv_youtube_id);
+        mDateTV = findViewById(R.id.tv_date);
+        mTempDescriptionTV = findViewById(R.id.tv_temp_description);
+        mLowHighTempTV = findViewById(R.id.tv_low_high_temp);
+        mWindTV = findViewById(R.id.tv_wind);
+        mHumidityTV = findViewById(R.id.tv_humidity);
+        mWeatherIconIV = findViewById(R.id.iv_weather_icon);
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(KitsuUtils.EXTRA_ANIME_ITEM)) {
+        if (intent != null && intent.hasExtra(OpenWeatherMapUtils.EXTRA_FORECAST_ITEM)) {
             mAnimeItem = (AnimeItem)intent.getSerializableExtra(
-                    KitsuUtils.EXTRA_ANIME_ITEM
+                    OpenWeatherMapUtils.EXTRA_FORECAST_ITEM
             );
             fillInLayout(mAnimeItem);
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.anime_item_detail, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.anime_item_detail, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*case R.id.action_share:
+            case R.id.action_share:
                 shareAnime();
                 return true;
-
-             */
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    /* public void shareAnime() {
+    public void shareAnime() {
         if (mAnimeItem != null) {
             String dateString = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
                     .format(mAnimeItem.dateTime);
@@ -94,33 +82,25 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
             startActivity(chooserIntent);
         }
     }
-    */
+
     private void fillInLayout(AnimeItem animeItem) {
-        /*String dateString = DateFormat.getDateTimeInstance().format(animeItem.dateTime);
+        String dateString = DateFormat.getDateTimeInstance().format(animeItem.dateTime);
         String detailString = getString(R.string.anime_item_details, animeItem.temperature,
                 WeatherPreferences.getDefaultTemperatureUnitsAbbr(), animeItem.description);
         String lowHighTempString = getString(R.string.anime_item_low_high_temp,
                 animeItem.temperatureLow, animeItem.temperatureHigh,
                 WeatherPreferences.getDefaultTemperatureUnitsAbbr());
+
         String windString = getString(R.string.anime_item_wind, animeItem.windSpeed,
                 animeItem.windDirection);
         String humidityString = getString(R.string.anime_item_humidity, animeItem.humidity);
         String iconURL = OpenWeatherMapUtils.buildIconURL(animeItem.icon);
 
-
-         */
-
-
-        //Glide.with(this).load(iconURL).into(mPosterIconIV);
-        mSynopsisTV.setText(animeItem.synopsis);
-        mTitleTV.setText(animeItem.title);
-        mAverageRatingTV.setText(animeItem.averageRating);
-        mPopularRankTV.setText(animeItem.popularityRank);
-        mShowTypeTV.setText(animeItem.showType);
-        mStatusTV.setText(animeItem.status);
-        mEpisodeCountTV.setText(animeItem.episodeCount);
-        mEpisodeLengthTV.setText(animeItem.episodeLength);
-        mYoutubeIDTV.setText(animeItem.youtubeVideoId);
-
+        mDateTV.setText(dateString);
+        mTempDescriptionTV.setText(detailString);
+        mLowHighTempTV.setText(lowHighTempString);
+        mWindTV.setText(windString);
+        mHumidityTV.setText(humidityString);
+        Glide.with(this).load(iconURL).into(mWeatherIconIV);
     }
 }

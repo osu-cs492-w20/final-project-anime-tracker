@@ -40,7 +40,7 @@ public class KitsuUtils {
     }
 
     static class KitsuSearchResults {
-        KitsuAnimeItem[] list;
+        KitsuAnimeItem[] data;
     }
 
     static class KitsuAnimeItem {
@@ -83,10 +83,10 @@ public class KitsuUtils {
     public static ArrayList<AnimeItem> parseKitsuJSON(String kitsuJSON){
         Gson gson = new Gson();
         KitsuSearchResults results =gson.fromJson(kitsuJSON, KitsuSearchResults.class);
-        if (results != null && results.list !=null) {
+        if (results != null && results.data !=null) {
             ArrayList<AnimeItem> animeItems = new ArrayList<>();
 
-            for (KitsuAnimeItem listItem :results.list) {
+            for (KitsuAnimeItem listItem :results.data) {
                 AnimeItem animeItem = new AnimeItem();
 
                 animeItem.synopsis = listItem.attributes.synopsis;

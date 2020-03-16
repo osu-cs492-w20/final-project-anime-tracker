@@ -75,7 +75,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeItemVie
         }
 
         public void bind(AnimeItem animeItem) {
-            String titleString = DateFormat.getDateTimeInstance().format(animeItem.title);
+            String titleString = animeItem.title;
             /*String detailString = mAnimeTempDescriptionTV.getContext().getString(
                     R.string.anime_item_details, animeItem.temperature,
                     WeatherPreferences.getDefaultTemperatureUnitsAbbr(), animeItem.description

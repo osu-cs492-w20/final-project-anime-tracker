@@ -13,8 +13,6 @@ public class AnimeDatabaseEntry implements Serializable {
     @NonNull
     public String id;
 
-    public String showName;
-
     @ColumnInfo(defaultValue = "WATCHING")
     public String watchStatus;
 
@@ -24,6 +22,52 @@ public class AnimeDatabaseEntry implements Serializable {
     @ColumnInfo(defaultValue = "0")
     public int episodesWatched;
 
-    @ColumnInfo(defaultValue = "1")
-    public int totalEpisodes;
+    public String synopsis;
+    public String link;
+    public String averageRating;
+    public int popularityRank;
+    public int ratingRank;
+    public String showType;
+    public String status;
+    public int episodeCount;
+    public int episodeLength;
+    public String youtubeVideoId;
+    public String title;          //english title
+    public String en_jp;       //japanese title in en
+    public String ja_jp;       //japanese title in jp
+    public String tiny;
+
+    public AnimeDatabaseEntry() {
+        super();
+    }
+
+    public void setAnimeDatabaseEntry(AnimeItem animeItem) {
+        this.id = animeItem.id;
+        this.synopsis = animeItem.synopsis;
+        this.link = animeItem.link;
+        this.averageRating = animeItem.averageRating;
+        this.popularityRank = animeItem.popularityRank;
+        this.ratingRank = animeItem.ratingRank;
+        this.showType = animeItem.showType;
+        this.status = animeItem.status;
+        this.episodeCount = animeItem.episodeCount;
+        this.episodeLength = animeItem.episodeLength;
+        this.youtubeVideoId = animeItem.youtubeVideoId;
+        this.title = animeItem.title;          //english title
+        this.en_jp = animeItem.en_jp;       //japanese title in en
+        this.ja_jp = animeItem.ja_jp;       //japanese title in jp
+        this.tiny = animeItem.tiny;
+    }
+
+    public void setWatchStatus(String watchStatus) {
+        this.watchStatus = watchStatus;
+    }
+
+    public void setShowScore(int showScore) {
+        this.showScore = showScore;
+    }
+
+    public void setEpisodesWatched(int episodesWatched) {
+        this.episodesWatched = episodesWatched;
+    }
 }

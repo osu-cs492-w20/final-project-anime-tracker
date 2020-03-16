@@ -14,7 +14,11 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
-    <string name="search_box_hint">Enter Title</string>
+    <string name="search_box_hint">Search Title...</string>
     <string name="search_title_button_text">Search</string>
     <string name="loading_title_error">Ooops, couldn\'t load title search</string>
+
+    <string name="genre_box_hint">Search Genre...</string>
+    <string name="search_genre_button_text">Search</string>
+    <string name="loading_genre_error">Ooops, couldn\'t load genre search</string>
 </resources>

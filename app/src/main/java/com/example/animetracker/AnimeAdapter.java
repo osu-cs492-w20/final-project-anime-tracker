@@ -75,13 +75,19 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeItemVie
         }
 
         public void bind(AnimeItem animeItem) {
-            String titleString = animeItem.title;
-            /*String detailString = mAnimeTempDescriptionTV.getContext().getString(
-                    R.string.anime_item_details, animeItem.temperature,
-                    WeatherPreferences.getDefaultTemperatureUnitsAbbr(), animeItem.description
-            );*/
+            String titleString = null;
+            if(animeItem.title != null){
+                titleString = animeItem.title;
+            } else if (animeItem.en_jp != null) {
+                titleString = animeItem.en_jp;
+            } else if (animeItem.ja_jp != null) {
+                titleString = animeItem.ja_jp;
+            } else {
+                titleString = "No Title Available";
+            }
 
-            //builds the anime url here
+
+
             String iconURL = animeItem.tiny;
             mAnimeTitleTV.setText(titleString);
             //mAnimeDescriptionTV.setText(detailString);

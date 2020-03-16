@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -11,20 +12,35 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.animetracker.AnimeAdapter;
 import com.example.animetracker.R;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+
+    private static final String TAG = HomeFragment.class.getSimpleName();
+
+    //private TextView mForecastLocationTV;
+    private RecyclerView mAnimeItemsRV;
+    private ProgressBar mLoadingIndicatorPB;
+    private TextView mLoadingErrorMessageTV;
+    private AnimeAdapter mAnimeAdapter;
+
+    private HomeViewModel mhomeViewModel;
+
+
+
+    public View onCreate()
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
+        mhomeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(this, new Observer<String>() {
+        mhomeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.example.android.animetracker.data.AnimePreferences;
 //import com.example.android.animetracker.utils.OpenWeatherMapUtils;
 
+import com.example.animetracker.data.AnimeItem;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;

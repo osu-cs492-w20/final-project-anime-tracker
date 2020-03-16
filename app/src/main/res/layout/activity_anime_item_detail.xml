@@ -1,94 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/iv_poster_icon"
-        android:padding="4dp"
         android:layout_width="128dp"
-        android:layout_height="128dp" />
+        android:layout_height="128dp"
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/tv_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
-        android:textSize="24sp"
-        android:textColor="#000"/>
+        android:padding="4dp"
+        android:textColor="#000"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tv_synopsis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_avg_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tv_rating_rank"
+        android:id="@+id/tv_popularity_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_show_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_episode_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_episode_length"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_youtube_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         android:layout_marginLeft="12dp"
+        android:padding="4dp"
         android:textSize="18sp" />
 
 </LinearLayout>

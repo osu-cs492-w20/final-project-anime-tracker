@@ -8,6 +8,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class KitsuUtils {
+
+    public static final String EXTRA_ANIME_ITEM = "com.example.android.animetracker.utils.AnimeItem";
+
     private final static String KITSU_ANIME_SEARCH_URL = "https://kitsu.io/api/edge/anime";
     private final static String KITSU_TITLE_QUERY_PARAM = "filter[text]";
     private final static String KITSU_GENRE_QUERY_PARAM = "filter[genres]";

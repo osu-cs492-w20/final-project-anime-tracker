@@ -14,22 +14,22 @@
             android:padding="4dp" />
 
         <Button
+            android:id="@+id/btn_link"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:autoLink="web"
             android:cursorVisible="true"
             android:layout_width="match_parent"
-            android:id="@+id/btn_link"
             android:text="@string/go_to_kit_button_text"
             android:linksClickable="true"/>
 
         <Button
+            android:id="@+id/btn_youtube"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:autoLink="web"
             android:cursorVisible="true"
             android:layout_width="match_parent"
-            android:id="@+id/btn_youtube"
             android:text="@string/go_to_youtube_button_text"
             android:linksClickable="true"/>
 

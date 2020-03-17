@@ -61,13 +61,15 @@ public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdap
 
     class AnimeDatabaseEntryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mAnimeTitleTV;
-        //private TextView mAnime_TV;
+        private TextView mAnimeScoreTV;
+        private TextView mAnimeEpisodesWatchedTV;
         private ImageView mAnimeIconIV;
 
         public AnimeDatabaseEntryViewHolder(View itemView) {
             super(itemView);
             mAnimeTitleTV = itemView.findViewById(R.id.tv_title);
-            //mAnime_TV = itemView.findViewById(R.id.tv_anime_);
+            mAnimeScoreTV = itemView.findViewById(R.id.tv_show_score);
+            mAnimeEpisodesWatchedTV = itemView.findViewById(R.id.tv_episodes_watched);
             mAnimeIconIV = itemView.findViewById(R.id.iv_poster_icon);
             itemView.setOnClickListener(this);
         }
@@ -83,8 +85,15 @@ public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdap
             } else {
                 titleString = "No Title Available";
             }
-
             mAnimeTitleTV.setText(titleString);
+
+            String animeScoreString = "Your Score: " + animeDatabaseEntry.showScore;
+            mAnimeScoreTV.setText(animeScoreString);
+            mAnimeScoreTV.setVisibility(View.VISIBLE);
+
+            String animeWatchedString = "Current Episodes Watched: " + animeDatabaseEntry.episodesWatched;
+            mAnimeEpisodesWatchedTV.setText(animeWatchedString);
+            mAnimeEpisodesWatchedTV.setVisibility(View.VISIBLE);
 
             String iconURL = animeDatabaseEntry.tiny;
             //uses glide to display the image

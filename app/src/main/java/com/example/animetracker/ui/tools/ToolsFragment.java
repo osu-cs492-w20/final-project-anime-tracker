@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -31,9 +32,10 @@ import java.util.List;
 
 public class ToolsFragment extends Fragment {
 
-    private ToolsViewModel toolsViewModel;
+    //private ToolsViewModel toolsViewModel;
     private AnimeListViewModel animeListViewModel;
-    private List<AnimeDatabaseEntry> animeDatabaseEntries;
+    private List<AnimeDatabaseEntry> animeDatabaseEntriesExport;
+    private Toast mTodoToast;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,18 +50,33 @@ public class ToolsFragment extends Fragment {
 //            }
 //        });
 
+        mTodoToast = null;
+
         animeListViewModel = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
         ).get(AnimeListViewModel.class);
+
+        animeListViewModel.getAllAnimeListEnties().observe(this, new Observer<List<AnimeDatabaseEntry>>() {
+            @Override
+            public void onChanged(List<AnimeDatabaseEntry> animeDatabaseEntries) {
+                animeDatabaseEntriesExport = animeDatabaseEntries;
+            }
+        });
 
         Button exportButton = root.findViewById(R.id.btn_export_anime_list);
         exportButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Context context = getActivity().getApplicationContext();
-                String json = generateJson(animeDatabaseEntries);
+                String json = generateJson(animeDatabaseEntriesExport);
                 writeToFile(json, context);
+                if (mTodoToast!= null) {
+                    mTodoToast.cancel();
+                }
+                String toastText = "Finished Exporting AnimeListExport.json";
+                mTodoToast = Toast.makeText(getActivity().getApplicationContext(), toastText, Toast.LENGTH_LONG);
+                mTodoToast.show();
             }
         });
 

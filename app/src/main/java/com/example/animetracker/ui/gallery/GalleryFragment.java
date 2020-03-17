@@ -26,6 +26,7 @@ import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.data.AnimeSearchPages;
 import com.example.animetracker.data.Status;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -123,7 +124,12 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Load more anime");
-                doAnimeTitleLoadMore(mPages.next);
+                if(mPages.next != null) {
+                    doAnimeTitleLoadMore(mPages.next);
+                } else{
+                    Snackbar.make(v, "No more results", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
@@ -139,8 +145,9 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
     }
 
     private void doAnimeTitleLoadMore(String nextPageUrl){
-        if(nextPageUrl != null)
-        mViewModel.loadNextTitlePageResults(nextPageUrl);
+        if(nextPageUrl != null) {
+            mViewModel.loadNextTitlePageResults(nextPageUrl);
+        }
     }
     private void doAnimeTitleSearch(String animeTitle){
         mViewModel.loadTitleSearchResults(animeTitle);

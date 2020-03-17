@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,7 +69,7 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         mStatusTV = findViewById(R.id.tv_status);
         mEpisodeCountTV = findViewById(R.id.tv_episode_count);
         mEpisodeLengthTV = findViewById(R.id.tv_episode_length);
-        mYoutubeIDTV = findViewById(R.id.tv_youtube_id);
+        //mYoutubeIDTV = findViewById(R.id.tv_youtube_id);
 
         mDatabaseScoreTV = findViewById(R.id.tv_database_score);
         mDatabaseWatchedTV = findViewById(R.id.tv_database_watched);
@@ -126,8 +127,8 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
         ).get(AnimeListViewModel.class);
 
-        final Button AddAnimeDatabaseButton = findViewById(R.id.btn_add_to_list);
-        AddAnimeDatabaseButton.setOnClickListener(new View.OnClickListener() {
+        final Button AddAnimeDatabaseBtn = findViewById(R.id.btn_add_to_list);
+        AddAnimeDatabaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnimeDatabaseEntry tempAnimeDatabaseEntry = new AnimeDatabaseEntry();
@@ -141,16 +142,85 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         });
 
         mAnimeDatabaseEntry = null;
+        final LinearLayout animeListInfoDisplayLL = findViewById(R.id.ll_anime_list_info_display);
+        final Button decShowScoreBtn = findViewById(R.id.btn_dec_to_score);
+        final Button incShowScoreBtn = findViewById(R.id.btn_add_to_score);
+        final Button decEpisodesWatchedBtn = findViewById(R.id.btn_dec_to_watched);
+        final Button incEpisodesWatchedBtn = findViewById(R.id.btn_add_to_watched);
         mAnimeListViewModel.getAnimeListEntryByName(mAnimeItem.id).observe(this, new Observer<AnimeDatabaseEntry>() {
             @Override
             public void onChanged(AnimeDatabaseEntry animeDatabaseEntry) {
                 if (animeDatabaseEntry != null) {
                     mIsSaved = true;
                     mAnimeDatabaseEntry = animeDatabaseEntry;
-                    AddAnimeDatabaseButton.setText("Remove from your list");
+                    AddAnimeDatabaseBtn.setText("Remove from your list");
+                    animeListInfoDisplayLL.setVisibility(View.VISIBLE);
+
+                    String animeScoreString = getString(R.string.anime_score, String.valueOf(animeDatabaseEntry.showScore));
+                    mDatabaseScoreTV.setText(animeScoreString);
+
+                    String animeWatchedString = getString(R.string.anime_watched, String.valueOf(animeDatabaseEntry.episodesWatched));
+                    mDatabaseWatchedTV.setText(animeWatchedString);
+
+                    decShowScoreBtn.setEnabled(true);
+                    incShowScoreBtn.setEnabled(true);
+                    if (animeDatabaseEntry.showScore <= 0) {
+                        decShowScoreBtn.setEnabled(false);
+                    } else if (animeDatabaseEntry.showScore >= 10) {
+                        incShowScoreBtn.setEnabled(false);
+                    }
+
+                    decEpisodesWatchedBtn.setEnabled(true);
+                    incEpisodesWatchedBtn.setEnabled(true);
+                    if (animeDatabaseEntry.episodesWatched <= 0) {
+                        decEpisodesWatchedBtn.setEnabled(false);
+                    } else if (animeDatabaseEntry.episodesWatched >= animeDatabaseEntry.episodeCount) {
+                        incEpisodesWatchedBtn.setEnabled(false);
+                    }
                 } else {
                     mIsSaved = false;
-                    AddAnimeDatabaseButton.setText("Add to your list");
+                    AddAnimeDatabaseBtn.setText("Add to your list");
+                    animeListInfoDisplayLL.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        decShowScoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAnimeDatabaseEntry.showScore >= 1) {
+                    mAnimeDatabaseEntry.showScore--;
+                    mAnimeListViewModel.updateAnimeListEntry(mAnimeDatabaseEntry);
+                }
+            }
+        });
+
+        incShowScoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAnimeDatabaseEntry.showScore <= 9) {
+                    mAnimeDatabaseEntry.showScore++;
+                    mAnimeListViewModel.updateAnimeListEntry(mAnimeDatabaseEntry);
+                }
+            }
+        });
+
+        decEpisodesWatchedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAnimeDatabaseEntry.episodesWatched >= 1) {
+                    mAnimeDatabaseEntry.episodesWatched--;
+                    mAnimeListViewModel.updateAnimeListEntry(mAnimeDatabaseEntry);
+                }
+            }
+        });
+
+        incEpisodesWatchedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAnimeDatabaseEntry.episodesWatched < mAnimeDatabaseEntry.episodeCount) {
+                    mAnimeDatabaseEntry.episodesWatched++;
+                    mAnimeListViewModel.updateAnimeListEntry(mAnimeDatabaseEntry);
                 }
             }
         });
@@ -237,17 +307,17 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         String animeEpisodeLengthString = getString(R.string.anime_episode_length, String.valueOf(animeItem.episodeLength));
         mEpisodeLengthTV.setText(animeEpisodeLengthString);
 
-        String animeYoutubeString = getString(R.string.anime_youtube_id, animeItem.youtubeVideoId);
-        mYoutubeIDTV.setText(animeYoutubeString);
+//        String animeYoutubeString = getString(R.string.anime_youtube_id, animeItem.youtubeVideoId);
+//        mYoutubeIDTV.setText(animeYoutubeString);
 
         String animeSynopsisString = getString(R.string.anime_synopsis, animeItem.synopsis);
         mSynopsisTV.setText(animeSynopsisString);
 
-        String animeScoreString = getString(R.string.anime_score); //, String.valueOf(animeItem.));
-        mDatabaseScoreTV.setText(animeScoreString);
-
-        String animeWatchedString = getString(R.string.anime_watched); //, String.valueOf(animeItem.));
-        mDatabaseWatchedTV.setText(animeWatchedString);
+//        String animeScoreString = getString(R.string.anime_score); //, String.valueOf(animeItem.));
+//        mDatabaseScoreTV.setText(animeScoreString);
+//
+//        String animeWatchedString = getString(R.string.anime_watched); //, String.valueOf(animeItem.));
+//        mDatabaseWatchedTV.setText(animeWatchedString);
 
 
 

@@ -41,6 +41,7 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
     private EditText mSearchBoxET;
     private ProgressBar mLoadingIndicatorPB;
     private TextView mErrorMessageTV;
+
     private AnimeSearchPages mPages;
     private Button loadMoreButton;
 
@@ -132,8 +133,6 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
                 }
             }
         });
-
-
 
 
         return root;

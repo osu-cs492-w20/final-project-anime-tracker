@@ -41,6 +41,10 @@ public class AnimeSearchViewModel extends ViewModel {
         mSearchTitleRepository.loadTitlePageSearch(nextPageUrl);
     }
 
+    public void loadNextGenrePageResults(String nextPageUrl){
+        mSearchGenreRepository.loadGenrePageSearch(nextPageUrl);
+    }
+
     public void loadTitleSearchResults(String title){
         mSearchTitleRepository.loadTitleSearch(title);
     }

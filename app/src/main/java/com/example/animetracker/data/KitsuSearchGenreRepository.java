@@ -58,4 +58,8 @@ public class KitsuSearchGenreRepository implements KitsuSearchAsyncTask.Callback
         Log.d(TAG, "fetching new search by genre data with this URL: " + url);
         new KitsuSearchAsyncTask(this).execute(url);
     }
+
+    public void loadGenrePageSearch(String url) {
+        new KitsuSearchAsyncTask(this).execute(url);
+    }
 }

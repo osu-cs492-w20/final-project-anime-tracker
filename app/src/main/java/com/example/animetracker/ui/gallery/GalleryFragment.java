@@ -139,6 +139,7 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
     }
 
     private void doAnimeTitleLoadMore(String nextPageUrl){
+        if(nextPageUrl != null)
         mViewModel.loadNextTitlePageResults(nextPageUrl);
     }
     private void doAnimeTitleSearch(String animeTitle){

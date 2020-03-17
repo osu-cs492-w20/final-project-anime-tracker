@@ -1,94 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/iv_poster_icon"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:padding="4dp" />
-
-    <TextView
-        android:id="@+id/tv_id"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textColor="#000"
-        android:textSize="24sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_synopsis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="24sp" />
+        <ImageView
+            android:id="@+id/iv_poster_icon"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:padding="4dp" />
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/btn_link"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:layout_width="match_parent"
+            android:text="@string/go_to_kit_button_text"
+            android:linksClickable="true"/>
 
-    <TextView
-        android:id="@+id/tv_avg_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/btn_youtube"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:autoLink="web"
+            android:cursorVisible="true"
+            android:layout_width="match_parent"
+            android:text="@string/go_to_youtube_button_text"
+            android:linksClickable="true"/>
 
-    <TextView
-        android:id="@+id/tv_popularity_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_show_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textColor="#000"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/tv_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_episode_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_episode_length"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_avg_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tv_youtube_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:padding="4dp"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_popularity_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_show_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_episode_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_episode_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_youtube_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_add_to_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_list_button_text"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/tv_synopsis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:padding="4dp"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+</ScrollView>

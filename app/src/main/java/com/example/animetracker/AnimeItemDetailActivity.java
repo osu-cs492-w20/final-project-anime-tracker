@@ -1,22 +1,34 @@
 package com.example.animetracker;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 //import com.bumptech.glide.Glide;
 //import com.example.android.animetracker.data.WeatherPreferences;
+import com.bumptech.glide.Glide;
+import com.example.animetracker.data.AnimeDatabaseEntry;
 import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.utils.KitsuUtils;
 
 import java.text.DateFormat;
+import java.util.List;
 
-public class AnimeItemDetailActivity extends AppCompatActivity {
+public class AnimeItemDetailActivity extends AppCompatActivity{
 
 
     private ImageView mPosterIconIV;
@@ -32,6 +44,8 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
 
     private AnimeItem mAnimeItem;
 
+    private AnimeListViewModel mAnimeListViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +53,7 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
 
 
         mPosterIconIV = findViewById(R.id.iv_poster_icon);
+
         mSynopsisTV = findViewById(R.id.tv_synopsis);
         mTitleTV = findViewById(R.id.tv_title);
         mAverageRatingTV = findViewById(R.id.tv_avg_rating);
@@ -56,7 +71,63 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
             );
             fillInLayout(mAnimeItem);
         }
+
+
+        Button goButton = findViewById(R.id.btn_link);
+        goButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (mAnimeItem.id != null) {
+                    Uri kitsuUri = Uri.parse("https://kitsu.io/anime/" + mAnimeItem.id);
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, kitsuUri);
+
+                    PackageManager pm = getPackageManager();
+                    List<ResolveInfo> activities = pm.queryIntentActivities(webIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                    if (activities.size() > 0) {
+                        startActivity(webIntent);
+                    }
+                }
+            }
+        });
+
+        Button youtubeButton = findViewById(R.id.btn_youtube);
+        if (mAnimeItem.youtubeVideoId == null || mAnimeItem.youtubeVideoId == "") {
+            youtubeButton.setVisibility(View.INVISIBLE);
+        } else {
+            youtubeButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                if (mAnimeItem.youtubeVideoId != null && mAnimeItem.youtubeVideoId != "") {
+                    Uri youtubeUri = Uri.parse("https://youtu.be/" + mAnimeItem.youtubeVideoId);
+                    Intent webIntent = new Intent(Intent.ACTION_VIEW, youtubeUri);
+
+                    PackageManager pm = getPackageManager();
+                    List<ResolveInfo> activities = pm.queryIntentActivities(webIntent, PackageManager.MATCH_DEFAULT_ONLY);
+                    if (activities.size() > 0) {
+                        startActivity(webIntent);
+                    }
+                }
+                }
+            });
+        }
+
+        mAnimeListViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(AnimeListViewModel.class);
+
+        Button AddAnimeDatabaseButton = findViewById(R.id.btn_add_to_list);
+        AddAnimeDatabaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimeDatabaseEntry tempAnimeDatabaseEntry = new AnimeDatabaseEntry();
+                tempAnimeDatabaseEntry.setAnimeDatabaseEntry(mAnimeItem);
+                mAnimeListViewModel.insertAnimeListEntry(tempAnimeDatabaseEntry);
+            }
+        });
     }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,31 +167,52 @@ public class AnimeItemDetailActivity extends AppCompatActivity {
     }
     */
     private void fillInLayout(AnimeItem animeItem) {
-        /*String dateString = DateFormat.getDateTimeInstance().format(animeItem.dateTime);
-        String detailString = getString(R.string.anime_item_details, animeItem.temperature,
-                WeatherPreferences.getDefaultTemperatureUnitsAbbr(), animeItem.description);
-        String lowHighTempString = getString(R.string.anime_item_low_high_temp,
-                animeItem.temperatureLow, animeItem.temperatureHigh,
-                WeatherPreferences.getDefaultTemperatureUnitsAbbr());
-        String windString = getString(R.string.anime_item_wind, animeItem.windSpeed,
-                animeItem.windDirection);
-        String humidityString = getString(R.string.anime_item_humidity, animeItem.humidity);
-        String iconURL = OpenWeatherMapUtils.buildIconURL(animeItem.icon);
+        // anime titles
+        //public String title;          //english title
+        //    public String en_jp;       //japanese title in en
+        //    public String ja_jp;       //japanese title in jp
+
+        if (animeItem.title != null){
+            String animeTitleString = getString(R.string.anime_title, animeItem.title);
+            mTitleTV.setText(animeTitleString);
+        }
+        else if (animeItem.en_jp != null){
+            String animeTitleString = getString(R.string.anime_title, animeItem.en_jp);
+            mTitleTV.setText(animeTitleString);
+        }
+        else if (animeItem.ja_jp != null){
+            String animeTitleString = getString(R.string.anime_title, animeItem.ja_jp);
+            mTitleTV.setText(animeTitleString);
+        }
+        else
+            mTitleTV.setText(getString(R.string.no_anime_title));
 
 
-         */
+        Glide.with(this).load(animeItem.tiny).into(mPosterIconIV);
 
+        String animeAverageRatingString = getString(R.string.anime_avg_rating, animeItem.averageRating);
+        mAverageRatingTV.setText(animeAverageRatingString);
 
-        //Glide.with(this).load(iconURL).into(mPosterIconIV);
-        mSynopsisTV.setText(animeItem.synopsis);
-        mTitleTV.setText(animeItem.title);
-        mAverageRatingTV.setText(animeItem.averageRating);
-        mPopularRankTV.setText(animeItem.popularityRank);
-        mShowTypeTV.setText(animeItem.showType);
-        mStatusTV.setText(animeItem.status);
-        mEpisodeCountTV.setText(animeItem.episodeCount);
-        mEpisodeLengthTV.setText(animeItem.episodeLength);
-        mYoutubeIDTV.setText(animeItem.youtubeVideoId);
+        String animePopularRankString = getString(R.string.anime_popular_rank, String.valueOf(animeItem.popularityRank));
+        mPopularRankTV.setText(animePopularRankString);
+
+        String animeShowTypeString = getString(R.string.anime_show_type, animeItem.showType);
+        mShowTypeTV.setText(animeShowTypeString);
+
+        String animeStatusString = getString(R.string.anime_status, animeItem.status);
+        mStatusTV.setText(animeStatusString);
+
+        String animeEpisodeCountString = getString(R.string.anime_episode_count, String.valueOf(animeItem.episodeCount));
+        mEpisodeCountTV.setText(animeEpisodeCountString);
+
+        String animeEpisodeLengthString = getString(R.string.anime_episode_length, String.valueOf(animeItem.episodeLength));
+        mEpisodeLengthTV.setText(animeEpisodeLengthString);
+
+        String animeYoutubeString = getString(R.string.anime_youtube_id, animeItem.youtubeVideoId);
+        mYoutubeIDTV.setText(animeYoutubeString);
+
+        String animeSynopsisString = getString(R.string.anime_synopsis, animeItem.synopsis);
+        mSynopsisTV.setText(animeSynopsisString);
 
     }
 }

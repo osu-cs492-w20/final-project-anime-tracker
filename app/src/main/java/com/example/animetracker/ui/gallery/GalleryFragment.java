@@ -1,5 +1,6 @@
 package com.example.animetracker.ui.gallery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,12 +22,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animetracker.AnimeAdapter;
+import com.example.animetracker.AnimeItemDetailActivity;
 import com.example.animetracker.AnimeSearchViewModel;
 import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.data.AnimeSearchPages;
 import com.example.animetracker.data.Status;
+
 import com.google.android.material.snackbar.Snackbar;
+
+import com.example.animetracker.utils.KitsuUtils;
+
 
 import java.util.List;
 
@@ -140,6 +146,9 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
 
     @Override
     public void onAnimeItemClick(AnimeItem anime){
+        Intent intent = new Intent(getActivity(), AnimeItemDetailActivity.class);
+        intent.putExtra(KitsuUtils.EXTRA_ANIME_ITEM, anime);
+        startActivity(intent);
         Log.d(TAG, "Anime item has been clicked!");
     }
 

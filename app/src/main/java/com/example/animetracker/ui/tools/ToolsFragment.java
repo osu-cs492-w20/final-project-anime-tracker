@@ -70,6 +70,7 @@ public class ToolsFragment extends Fragment {
             public void onClick(View v){
                 Context context = getActivity().getApplicationContext();
                 String json = generateJson(animeDatabaseEntriesExport);
+                Log.d("Export JSON Fragment", "exported JSON: " + json);
                 writeToFile(json, context);
                 if (mTodoToast!= null) {
                     mTodoToast.cancel();

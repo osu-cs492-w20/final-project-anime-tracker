@@ -16,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 //import com.bumptech.glide.Glide;
 //import com.example.android.animetracker.data.WeatherPreferences;
 import com.bumptech.glide.Glide;
+import com.example.animetracker.data.AnimeDatabaseEntry;
 import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.utils.KitsuUtils;
 
@@ -41,6 +43,8 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
     private TextView mYoutubeIDTV;
 
     private AnimeItem mAnimeItem;
+
+    private AnimeListViewModel mAnimeListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +77,8 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         goButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if (mAnimeItem.link != null) {
-                    Uri kitsuUri = Uri.parse(mAnimeItem.link);
+                if (mAnimeItem.id != null) {
+                    Uri kitsuUri = Uri.parse("https://kitsu.io/anime/" + mAnimeItem.id);
                     Intent webIntent = new Intent(Intent.ACTION_VIEW, kitsuUri);
 
                     PackageManager pm = getPackageManager();
@@ -87,10 +91,13 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         });
 
         Button youtubeButton = findViewById(R.id.btn_youtube);
-        youtubeButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                if (mAnimeItem.youtubeVideoId != null) {
+        if (mAnimeItem.youtubeVideoId == null || mAnimeItem.youtubeVideoId == "") {
+            youtubeButton.setVisibility(View.INVISIBLE);
+        } else {
+            youtubeButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                if (mAnimeItem.youtubeVideoId != null && mAnimeItem.youtubeVideoId != "") {
                     Uri youtubeUri = Uri.parse("https://youtu.be/" + mAnimeItem.youtubeVideoId);
                     Intent webIntent = new Intent(Intent.ACTION_VIEW, youtubeUri);
 
@@ -100,9 +107,24 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
                         startActivity(webIntent);
                     }
                 }
+                }
+            });
+        }
+
+        mAnimeListViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(AnimeListViewModel.class);
+
+        Button AddAnimeDatabaseButton = findViewById(R.id.btn_add_to_list);
+        AddAnimeDatabaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimeDatabaseEntry tempAnimeDatabaseEntry = new AnimeDatabaseEntry();
+                tempAnimeDatabaseEntry.setAnimeDatabaseEntry(mAnimeItem);
+                mAnimeListViewModel.insertAnimeListEntry(tempAnimeDatabaseEntry);
             }
         });
-
     }
 
 

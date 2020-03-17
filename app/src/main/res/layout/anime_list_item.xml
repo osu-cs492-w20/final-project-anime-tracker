@@ -25,16 +25,26 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="4dp"
                 android:textSize="24sp"
                 android:textColor="#000"/>
 
             <TextView
-                android:id="@+id/iv_poster_text"
+                android:id="@+id/tv_show_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textSize="22sp" />
+                android:padding="4dp"
+                android:textSize="22sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_episodes_watched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textSize="22sp"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 

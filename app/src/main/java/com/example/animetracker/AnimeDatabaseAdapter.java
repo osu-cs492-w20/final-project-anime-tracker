@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.animetracker.data.AnimeDatabaseEntry;
 
 import java.text.DateFormat;
@@ -21,26 +22,26 @@ import com.example.animetracker.data.AnimeDatabaseEntry;
 
 public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdapter.AnimeDatabaseEntryViewHolder> {
 
-    private List<AnimeDatabaseEntry> mAnimeDatabaseEntrys;
+    private List<AnimeDatabaseEntry> mAnimeDatabaseEntries;
     private OnAnimeDatabaseEntryClickListener mAnimeDatabaseEntryClickListener;
 
     public interface OnAnimeDatabaseEntryClickListener {
-        void onAnimeDatabaseEntryClick(AnimeDatabaseEntry AnimeDatabaseEntry);
+        void onAnimeDatabaseEntryClick(AnimeDatabaseEntry animeDatabaseEntry);
     }
 
     public AnimeDatabaseAdapter(OnAnimeDatabaseEntryClickListener clickListener) {
         mAnimeDatabaseEntryClickListener = clickListener;
     }
 
-    public void updateAnimeDatabaseEntrys(List<AnimeDatabaseEntry> AnimeDatabaseEntrys) {
-        mAnimeDatabaseEntrys = AnimeDatabaseEntrys;
+    public void updateAnimeDatabaseEntries(List<AnimeDatabaseEntry> animeDatabaseEntries) {
+        mAnimeDatabaseEntries = animeDatabaseEntries;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mAnimeDatabaseEntrys != null) {
-            return mAnimeDatabaseEntrys.size();
+        if (mAnimeDatabaseEntries != null) {
+            return mAnimeDatabaseEntries.size();
         } else {
             return 0;
         }
@@ -55,42 +56,54 @@ public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdap
 
     @Override
     public void onBindViewHolder(AnimeDatabaseEntryViewHolder holder, int position) {
-        holder.bind(mAnimeDatabaseEntrys.get(position));
+        holder.bind(mAnimeDatabaseEntries.get(position));
     }
 
     class AnimeDatabaseEntryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mAnimeTitleTV;
-        //private TextView mAnime_TV;
+        private TextView mAnimeScoreTV;
+        private TextView mAnimeEpisodesWatchedTV;
         private ImageView mAnimeIconIV;
 
         public AnimeDatabaseEntryViewHolder(View itemView) {
             super(itemView);
             mAnimeTitleTV = itemView.findViewById(R.id.tv_title);
-            //mAnime_TV = itemView.findViewById(R.id.tv_anime_);
+            mAnimeScoreTV = itemView.findViewById(R.id.tv_show_score);
+            mAnimeEpisodesWatchedTV = itemView.findViewById(R.id.tv_episodes_watched);
             mAnimeIconIV = itemView.findViewById(R.id.iv_poster_icon);
             itemView.setOnClickListener(this);
         }
 
-        public void bind(AnimeDatabaseEntry AnimeDatabaseEntry) {
-            String titleString = DateFormat.getDateTimeInstance().format(AnimeDatabaseEntry.title);
-            /*String detailString = mAnimeTempDescriptionTV.getContext().getString(
-                    R.string.anime_item_details, AnimeDatabaseEntry.temperature,
-                    WeatherPreferences.getDefaultTemperatureUnitsAbbr(), AnimeDatabaseEntry.description
-            );*/
-
-            //builds the anime url here
-            //String iconURL = OpenWeatherMapUtils.buildIconURL(AnimeDatabaseEntry.icon);
+        public void bind(AnimeDatabaseEntry animeDatabaseEntry) {
+            String titleString = null;
+            if(animeDatabaseEntry.title != null){
+                titleString = animeDatabaseEntry.title;
+            } else if (animeDatabaseEntry.en_jp != null) {
+                titleString = animeDatabaseEntry.en_jp;
+            } else if (animeDatabaseEntry.ja_jp != null) {
+                titleString = animeDatabaseEntry.ja_jp;
+            } else {
+                titleString = "No Title Available";
+            }
             mAnimeTitleTV.setText(titleString);
-            //mAnimeDescriptionTV.setText(detailString);
 
+            String animeScoreString = "Your Score: " + animeDatabaseEntry.showScore;
+            mAnimeScoreTV.setText(animeScoreString);
+            mAnimeScoreTV.setVisibility(View.VISIBLE);
+
+            String animeWatchedString = "Current Episodes Watched: " + animeDatabaseEntry.episodesWatched;
+            mAnimeEpisodesWatchedTV.setText(animeWatchedString);
+            mAnimeEpisodesWatchedTV.setVisibility(View.VISIBLE);
+
+            String iconURL = animeDatabaseEntry.tiny;
             //uses glide to display the image
-            //Glide.with(mWeatherIconIV.getContext()).load(iconURL).into(mWeatherIconIV);
+            Glide.with(mAnimeIconIV.getContext()).load(iconURL).into(mAnimeIconIV);
         }
 
         @Override
         public void onClick(View v) {
-            AnimeDatabaseEntry AnimeDatabaseEntry = mAnimeDatabaseEntrys.get(getAdapterPosition());
-            mAnimeDatabaseEntryClickListener.onAnimeDatabaseEntryClick(AnimeDatabaseEntry);
+            AnimeDatabaseEntry animeDatabaseEntry = mAnimeDatabaseEntries.get(getAdapterPosition());
+            mAnimeDatabaseEntryClickListener.onAnimeDatabaseEntryClick(animeDatabaseEntry);
         }
     }
 }

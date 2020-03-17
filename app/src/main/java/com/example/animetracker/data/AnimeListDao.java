@@ -22,7 +22,7 @@ public interface AnimeListDao {
     @Update
     void update(AnimeDatabaseEntry entry);
 
-    @Query("SELECT * FROM animeList")
+    @Query("SELECT * FROM animeList ORDER BY title")
     LiveData<List<AnimeDatabaseEntry>> getAllAnimeListEntries();
 
     @Query("SELECT * FROM animeList WHERE id = :id LIMIT 1")

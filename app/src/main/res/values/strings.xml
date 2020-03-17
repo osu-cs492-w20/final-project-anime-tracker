@@ -21,4 +21,5 @@
     <string name="genre_box_hint">Search Genre...</string>
     <string name="search_genre_button_text">Search</string>
     <string name="loading_genre_error">Ooops, couldn\'t load genre search</string>
+    <string name="load_more_button_text">Load more</string>
 </resources>

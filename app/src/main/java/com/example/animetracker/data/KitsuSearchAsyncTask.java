@@ -14,8 +14,9 @@ import javax.security.auth.callback.Callback;
 public class KitsuSearchAsyncTask extends AsyncTask<String, Void, String> {
     private Callback mCallback;
 
+
     public interface Callback {
-        void onSearchFinished(List<AnimeItem> searchTitleResults);
+        void onSearchFinished(List<AnimeItem> searchTitleResults, AnimeSearchPages searchPages);
     }
 
     public KitsuSearchAsyncTask(Callback callback){
@@ -37,10 +38,12 @@ public class KitsuSearchAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s){
         List<AnimeItem> searchResults = null;
+        AnimeSearchPages pages = null;
         if(s != null){
             searchResults = KitsuUtils.parseKitsuJSON(s);
+            pages = KitsuUtils.parseKitsupagesJSON(s);
         }
-        mCallback.onSearchFinished(searchResults);
+        mCallback.onSearchFinished(searchResults, pages);
     }
 
 }

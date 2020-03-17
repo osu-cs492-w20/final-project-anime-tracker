@@ -3,6 +3,7 @@ package com.example.animetracker.utils;
 import android.net.Uri;
 
 import com.example.animetracker.data.AnimeItem;
+import com.example.animetracker.data.AnimeSearchPages;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -38,9 +39,7 @@ public class KitsuUtils {
                 .build()
                 .toString();
     }
-    static class KitsuSearchPages{
-        KitsuSearchLinks links;
-    }
+
 
     static class KitsuSearchLinks {
         String first;
@@ -50,7 +49,7 @@ public class KitsuUtils {
 
     static class KitsuSearchResults {
         KitsuAnimeItem[] data;
-
+        KitsuSearchLinks links;         //for later pagination
     }
 
     static class KitsuAnimeItem {
@@ -88,6 +87,20 @@ public class KitsuUtils {
         String small;
         String medium;
         String large;
+    }
+
+    public static AnimeSearchPages parseKitsupagesJSON(String kitsuJSON){
+        Gson gson = new Gson();
+        KitsuSearchResults results =gson.fromJson(kitsuJSON, KitsuSearchResults.class);
+        AnimeSearchPages pages = null;
+        if (results != null && results.data !=null) {
+            pages = new AnimeSearchPages();
+            pages.first = results.links.first;
+            pages.next = results.links.next;
+            pages.last = results.links.last;
+        }
+
+        return pages;
     }
 
 

@@ -10,14 +10,14 @@
         android:padding="8dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_anime_list_message"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:visibility="invisible"
-            android:text="@string/anime_list_message"/>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_anime_list_message"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:textSize="20sp"-->
+<!--            android:padding="16dp"-->
+<!--            android:visibility="invisible"-->
+<!--            android:text="@string/anime_list_message"/>-->
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -28,23 +28,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tv_loading_error_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:padding="16dp"
-                android:visibility="invisible"
-                android:text="@string/loading_title_message" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_loading_error_message"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="20sp"-->
+<!--                android:padding="16dp"-->
+<!--                android:visibility="invisible"-->
+<!--                android:text="@string/loading_title_message" />-->
 
-            <ProgressBar
-                android:id="@+id/pb_loading_indicator"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_margin="32dp"
-                android:layout_gravity="top|center_horizontal"
-                android:visibility="invisible"/>
+<!--            <ProgressBar-->
+<!--                android:id="@+id/pb_loading_indicator"-->
+<!--                android:layout_width="72dp"-->
+<!--                android:layout_height="72dp"-->
+<!--                android:layout_margin="32dp"-->
+<!--                android:layout_gravity="top|center_horizontal"-->
+<!--                android:visibility="invisible"/>-->
         </FrameLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

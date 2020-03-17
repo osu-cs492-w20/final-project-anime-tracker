@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 //import com.bumptech.glide.Glide;
@@ -45,6 +46,8 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
     private AnimeItem mAnimeItem;
 
     private AnimeListViewModel mAnimeListViewModel;
+    private boolean mIsSaved = false;
+    private AnimeDatabaseEntry mAnimeDatabaseEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,13 +119,32 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
         ).get(AnimeListViewModel.class);
 
-        Button AddAnimeDatabaseButton = findViewById(R.id.btn_add_to_list);
+        final Button AddAnimeDatabaseButton = findViewById(R.id.btn_add_to_list);
         AddAnimeDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnimeDatabaseEntry tempAnimeDatabaseEntry = new AnimeDatabaseEntry();
                 tempAnimeDatabaseEntry.setAnimeDatabaseEntry(mAnimeItem);
-                mAnimeListViewModel.insertAnimeListEntry(tempAnimeDatabaseEntry);
+                if (!mIsSaved) {
+                    mAnimeListViewModel.insertAnimeListEntry(tempAnimeDatabaseEntry);
+                } else {
+                    mAnimeListViewModel.deleteAnimeListEntry(tempAnimeDatabaseEntry);
+                }
+            }
+        });
+
+        mAnimeDatabaseEntry = null;
+        mAnimeListViewModel.getAnimeListEntryByName(mAnimeItem.id).observe(this, new Observer<AnimeDatabaseEntry>() {
+            @Override
+            public void onChanged(AnimeDatabaseEntry animeDatabaseEntry) {
+                if (animeDatabaseEntry != null) {
+                    mIsSaved = true;
+                    mAnimeDatabaseEntry = animeDatabaseEntry;
+                    AddAnimeDatabaseButton.setText("Remove from your list");
+                } else {
+                    mIsSaved = false;
+                    AddAnimeDatabaseButton.setText("Add to your list");
+                }
             }
         });
     }

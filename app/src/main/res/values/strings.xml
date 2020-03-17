@@ -9,6 +9,10 @@
     <string name="loading_title_message">Woops.  We couldn\'t load your animes.  Check your internet connection and try again.</string>
     <string name="anime_list_message">Anime List</string>
     <string name="add_to_list_button_text">Add to your list</string>
+    <string name="add_to_score_button_text">\+1 Score</string>
+    <string name="dec_to_score_button_text">\-1 Score</string>
+    <string name="add_to_watched_button_text">\+1 Episodes Watched</string>
+    <string name="dec_to_watched_button_text">\-1 Episodes Watched</string>
     <string name="go_to_kit_button_text">View on Kitsu</string>
     <string name="go_to_youtube_button_text">View Trailer on Youtube</string>
 
@@ -39,6 +43,8 @@
     <string name="anime_episode_length">Episode Length: %1$s</string>
     <string name="anime_youtube_id">YoutubeID: %1$s</string>
     <string name="anime_synopsis">Synopsis: \n %1$s</string>
+    <string name="anime_score">Current Score: %1$s</string>
+    <string name="anime_watched">Current Episodes Watched: %1$s</string>
   
     <string name="export_anime_list">Export Anime List JSON</string>
 </resources>

@@ -9,10 +9,11 @@
     <string name="loading_title_message">Woops.  We couldn\'t load your animes.  Check your internet connection and try again.</string>
     <string name="anime_list_message">Anime List</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Anime List</string>
     <string name="menu_gallery">Title Search</string>
     <string name="menu_slideshow">Genre Search</string>
-    <string name="menu_tools">Tools</string>
+    <string name="menu_tools">Export Anime List</string>
+
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
@@ -23,4 +24,6 @@
     <string name="genre_box_hint">Search Genre...</string>
     <string name="search_genre_button_text">Search</string>
     <string name="loading_genre_error">Ooops, couldn\'t load genre search</string>
+  
+    <string name="export_anime_list">Export Anime List JSON</string>
 </resources>

@@ -91,4 +91,11 @@
         android:padding="4dp"
         android:textSize="18sp" />
 
+    <Button
+        android:id="@+id/btn_add_to_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_list_button_text"
+        android:textSize="22sp"/>
+
 </LinearLayout>

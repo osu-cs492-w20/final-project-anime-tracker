@@ -1,5 +1,6 @@
 package com.example.animetracker.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.animetracker.AnimeAdapter;
 import com.example.animetracker.AnimeDatabaseAdapter;
+import com.example.animetracker.AnimeItemDetailActivity;
 import com.example.animetracker.AnimeListViewModel;
 import com.example.animetracker.AnimeSearchViewModel;
 import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeDatabaseEntry;
 import com.example.animetracker.data.AnimeItem;
 import com.example.animetracker.data.Status;
+import com.example.animetracker.utils.KitsuUtils;
 
 import java.util.List;
 
@@ -91,7 +94,12 @@ public class HomeFragment extends Fragment implements AnimeDatabaseAdapter.OnAni
 
     @Override
     public void onAnimeDatabaseEntryClick(AnimeDatabaseEntry entry){
-        Log.d(TAG, "this does nothing");
+
+        Intent intent = new Intent(getActivity(), AnimeItemDetailActivity.class);
+        intent.putExtra(KitsuUtils.EXTRA_ANIME_ITEM, entry);
+        startActivity(intent);
+
+        Log.d(TAG, "this does something");
     }
 
     private void doAnimeListGet(){

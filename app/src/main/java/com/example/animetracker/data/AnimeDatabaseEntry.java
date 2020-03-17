@@ -77,4 +77,25 @@ public class AnimeDatabaseEntry extends AnimeItem implements Serializable {
     public void setEpisodesWatched(int episodesWatched) {
         this.episodesWatched = episodesWatched;
     }
+
+    public AnimeItem convertToAnimeItem() {
+        AnimeItem tempAnimeItem = new AnimeItem();
+        tempAnimeItem.id = this.id;
+        tempAnimeItem.synopsis = this.synopsis;
+        tempAnimeItem.link = this.link ;
+        tempAnimeItem.averageRating = this.averageRating;
+        tempAnimeItem.popularityRank = this.popularityRank;
+        tempAnimeItem.ratingRank = this.ratingRank;
+        tempAnimeItem.showType = this.showType;
+        tempAnimeItem.status = this.status;
+        tempAnimeItem.episodeCount = this.episodeCount ;
+        tempAnimeItem.episodeLength = this.episodeLength;
+        tempAnimeItem.youtubeVideoId = this.youtubeVideoId;
+        tempAnimeItem.title = this.title;          //english title
+        tempAnimeItem.en_jp = this.en_jp;       //japanese title in en
+        tempAnimeItem.ja_jp = this.ja_jp;       //japanese title in jp
+        tempAnimeItem.tiny = this.tiny;
+
+        return tempAnimeItem;
+    }
 }

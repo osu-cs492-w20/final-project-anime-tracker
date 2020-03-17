@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.animetracker.data.AnimeDatabaseEntry;
 
 import java.text.DateFormat;
@@ -32,8 +33,8 @@ public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdap
         mAnimeDatabaseEntryClickListener = clickListener;
     }
 
-    public void updateAnimeDatabaseEntrys(List<AnimeDatabaseEntry> AnimeDatabaseEntrys) {
-        mAnimeDatabaseEntrys = AnimeDatabaseEntrys;
+    public void updateAnimeDatabaseEntrys(List<AnimeDatabaseEntry> animeDatabaseEntries) {
+        mAnimeDatabaseEntrys = animeDatabaseEntries;
         notifyDataSetChanged();
     }
 
@@ -71,20 +72,24 @@ public class AnimeDatabaseAdapter extends RecyclerView.Adapter<AnimeDatabaseAdap
             itemView.setOnClickListener(this);
         }
 
-        public void bind(AnimeDatabaseEntry AnimeDatabaseEntry) {
-            String titleString = DateFormat.getDateTimeInstance().format(AnimeDatabaseEntry.title);
-            /*String detailString = mAnimeTempDescriptionTV.getContext().getString(
-                    R.string.anime_item_details, AnimeDatabaseEntry.temperature,
-                    WeatherPreferences.getDefaultTemperatureUnitsAbbr(), AnimeDatabaseEntry.description
-            );*/
+        public void bind(AnimeDatabaseEntry animeDatabaseEntry) {
+            String titleString = null;
+            if(animeDatabaseEntry.title != null){
+                titleString = animeDatabaseEntry.title;
+            } else if (animeDatabaseEntry.en_jp != null) {
+                titleString = animeDatabaseEntry.en_jp;
+            } else if (animeDatabaseEntry.ja_jp != null) {
+                titleString = animeDatabaseEntry.ja_jp;
+            } else {
+                titleString = "No Title Available";
+            }
 
-            //builds the anime url here
-            //String iconURL = OpenWeatherMapUtils.buildIconURL(AnimeDatabaseEntry.icon);
+            String iconURL = animeDatabaseEntry.tiny;
             mAnimeTitleTV.setText(titleString);
             //mAnimeDescriptionTV.setText(detailString);
 
             //uses glide to display the image
-            //Glide.with(mWeatherIconIV.getContext()).load(iconURL).into(mWeatherIconIV);
+            Glide.with(mAnimeIconIV.getContext()).load(iconURL).into(mAnimeIconIV);
         }
 
         @Override

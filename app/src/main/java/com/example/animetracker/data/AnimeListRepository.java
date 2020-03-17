@@ -76,4 +76,7 @@ public class AnimeListRepository {
             return null;
         }
     }
+
+
+
 }

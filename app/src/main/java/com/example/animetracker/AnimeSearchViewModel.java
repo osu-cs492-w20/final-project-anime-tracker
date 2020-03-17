@@ -54,6 +54,7 @@ public class AnimeSearchViewModel extends ViewModel {
     }
 
     public LiveData<AnimeSearchPages> getTitleSearchPages(){
+
         return mSearchTitlePages;
     }
 

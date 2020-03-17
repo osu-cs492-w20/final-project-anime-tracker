@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ToolsFragment extends Fragment {
 
     //private ToolsViewModel toolsViewModel;
+    private TextView animeExportJsonTV;
     private AnimeListViewModel animeListViewModel;
     private List<AnimeDatabaseEntry> animeDatabaseEntriesExport;
     private Toast mTodoToast;
@@ -46,6 +48,7 @@ public class ToolsFragment extends Fragment {
 //        });
 
         mTodoToast = null;
+        animeExportJsonTV = root.findViewById(R.id.tv_export_anime_json);
 
         animeListViewModel = new ViewModelProvider(
                 this,
@@ -67,6 +70,7 @@ public class ToolsFragment extends Fragment {
                 String json = generateJson(animeDatabaseEntriesExport);
                 Log.d("Export JSON Fragment", "exported JSON: " + json);
                 writeToFile(json, context);
+                animeExportJsonTV.setText(json);
                 if (mTodoToast!= null) {
                     mTodoToast.cancel();
                 }

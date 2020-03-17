@@ -9,24 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.animetracker.AnimeAdapter;
 import com.example.animetracker.AnimeDatabaseAdapter;
 import com.example.animetracker.AnimeItemDetailActivity;
 import com.example.animetracker.AnimeListViewModel;
-import com.example.animetracker.AnimeSearchViewModel;
 import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeDatabaseEntry;
-import com.example.animetracker.data.AnimeItem;
-import com.example.animetracker.data.Status;
 import com.example.animetracker.utils.KitsuUtils;
 
 import java.util.List;
@@ -83,7 +77,7 @@ public class HomeFragment extends Fragment implements AnimeDatabaseAdapter.OnAni
                 new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())
         ).get(AnimeListViewModel.class);
 
-        mViewModel.getAllAnimeListEnties().observe(this, new Observer<List<AnimeDatabaseEntry>>() {
+        mViewModel.getAllAnimeListEntries().observe(this, new Observer<List<AnimeDatabaseEntry>>() {
             @Override
             public void onChanged(List<AnimeDatabaseEntry> databaseEntries) {
                 mAdapter.updateAnimeDatabaseEntrys(databaseEntries);
@@ -103,6 +97,6 @@ public class HomeFragment extends Fragment implements AnimeDatabaseAdapter.OnAni
     }
 
     private void doAnimeListGet(){
-        mViewModel.getAllAnimeListEnties();
+        mViewModel.getAllAnimeListEntries();
     }
 }

@@ -33,6 +33,9 @@
     <string name="search_genre_button_text">Search</string>
     <string name="loading_genre_error">Ooops, couldn\'t load genre search</string>
 
+    <string name="load_more_button_text">Load more</string>
+
+
     <string name="anime_title">Title: %1$s</string>
     <string name="no_anime_title">No Title</string>
     <string name="anime_avg_rating">Average Rating: %1$s</string>
@@ -47,4 +50,5 @@
     <string name="anime_watched">Current Episodes Watched: %1$s</string>
   
     <string name="export_anime_list">Export Anime List JSON</string>
+
 </resources>

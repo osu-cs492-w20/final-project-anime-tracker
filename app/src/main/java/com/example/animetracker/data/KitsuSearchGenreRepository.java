@@ -12,17 +12,18 @@ import java.util.List;
 public class KitsuSearchGenreRepository implements KitsuSearchAsyncTask.Callback {
     private static final String TAG = KitsuSearchGenreRepository.class.getSimpleName();
     private MutableLiveData<List<AnimeItem>> mSearhGenreResults;
-
     private MutableLiveData<Status> mLoadingGenreStatus;
 
-
+    private MutableLiveData<AnimeSearchPages> mPages;
 
     public KitsuSearchGenreRepository() {
         mSearhGenreResults = new MutableLiveData<>();
         mSearhGenreResults.setValue(null);
-
         mLoadingGenreStatus = new MutableLiveData<>();
         mLoadingGenreStatus.setValue(Status.SUCCESS);
+
+        mPages = new MutableLiveData<>();
+        mPages.setValue(null);
     }
 
 
@@ -30,15 +31,18 @@ public class KitsuSearchGenreRepository implements KitsuSearchAsyncTask.Callback
         return mSearhGenreResults;
     }
 
-
+    public LiveData<AnimeSearchPages> getSearchPages() {
+        return mPages;
+    }
 
     public LiveData<Status> getLoadingGenreStatus () {
         return mLoadingGenreStatus;
     }
 
     @Override
-    public void onSearchFinished(List<AnimeItem> searchResults){
+    public void onSearchFinished(List<AnimeItem> searchResults, AnimeSearchPages pages){
         mSearhGenreResults.setValue(searchResults);
+        mPages.setValue(pages);
         if (searchResults !=null){
             mLoadingGenreStatus.setValue(Status.SUCCESS);
         } else{
@@ -51,7 +55,11 @@ public class KitsuSearchGenreRepository implements KitsuSearchAsyncTask.Callback
         mSearhGenreResults.setValue(null);
         mLoadingGenreStatus.setValue(Status.LOADING);
         String url = KitsuUtils.buildKitsuSearchGenre(genre);
-        Log.d(TAG, "fetching new search by title data with this URL: " + url);
+        Log.d(TAG, "fetching new search by genre data with this URL: " + url);
+        new KitsuSearchAsyncTask(this).execute(url);
+    }
+
+    public void loadGenrePageSearch(String url) {
         new KitsuSearchAsyncTask(this).execute(url);
     }
 }

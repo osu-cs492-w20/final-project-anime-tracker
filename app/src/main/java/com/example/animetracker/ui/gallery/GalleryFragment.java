@@ -26,8 +26,13 @@ import com.example.animetracker.AnimeItemDetailActivity;
 import com.example.animetracker.AnimeSearchViewModel;
 import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeItem;
+import com.example.animetracker.data.AnimeSearchPages;
 import com.example.animetracker.data.Status;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import com.example.animetracker.utils.KitsuUtils;
+
 
 import java.util.List;
 
@@ -43,13 +48,16 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
     private ProgressBar mLoadingIndicatorPB;
     private TextView mErrorMessageTV;
 
+    private AnimeSearchPages mPages;
+    private Button loadMoreButton;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-
+        loadMoreButton = root.findViewById(R.id.btn_title_load_more);
         mSearchBoxET = root.findViewById(R.id.et_title_search_box);
         mSearchResultsRV = (RecyclerView) root.findViewById(R.id.rv_search_anime_title);
 
@@ -64,28 +72,43 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
         mErrorMessageTV = root.findViewById(R.id.tv_title_error_message);
 
         //mViewModel = new ViewModelProvider(this).get(AnimeSearchViewModel.class);
-        mViewModel = ViewModelProviders.of(this).get(AnimeSearchViewModel.class);
+        mViewModel = ViewModelProviders.of(getActivity()).get(AnimeSearchViewModel.class);
 
         mViewModel.getTitleSearchResults().observe(this, new Observer<List<AnimeItem>>() {
             @Override
             public void onChanged(List<AnimeItem> animeItems) {
                 mAdapter.updateAnimeItems(animeItems);
+
+
             }
         });
 
-        mViewModel.getTitleSEarchLoadingStatus().observe(this, new Observer<Status>() {
+        mViewModel.getTitleSearchPages().observe(this, new Observer<AnimeSearchPages>() {
+            @Override
+            public void onChanged(AnimeSearchPages searchPages) {
+                mPages = searchPages;
+            }
+        });
+
+
+
+        mViewModel.getTitleSearchLoadingStatus().observe(this, new Observer<Status>() {
             @Override
             public void onChanged(Status status) {
                 if(status == Status.LOADING){
                     mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                    loadMoreButton.setVisibility(View.INVISIBLE);
                 } else if(status == Status.SUCCESS) {
                     mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
                     mSearchResultsRV.setVisibility(View.VISIBLE);
                     mErrorMessageTV.setVisibility(View.INVISIBLE);
+                    loadMoreButton.setVisibility(View.VISIBLE);
+
                 } else {
                     mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
                     mSearchResultsRV.setVisibility(View.INVISIBLE);
                     mErrorMessageTV.setVisibility(View.VISIBLE);
+                    loadMoreButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -101,16 +124,21 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
             }
         });
 
-        /*galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(this, new Observer<String>() {
+
+        loadMoreButton = root.findViewById(R.id.btn_title_load_more);
+        loadMoreButton.setVisibility(View.INVISIBLE);
+        loadMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                Log.d(TAG, "Load more anime");
+                if(mPages.next != null) {
+                    doAnimeTitleLoadMore(mPages.next);
+                } else{
+                    Snackbar.make(v, "No more results", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
-        });*/
+        });
 
 
         return root;
@@ -124,9 +152,15 @@ public class GalleryFragment extends Fragment implements AnimeAdapter.OnAnimeIte
         Log.d(TAG, "Anime item has been clicked!");
     }
 
+    private void doAnimeTitleLoadMore(String nextPageUrl){
+        if(nextPageUrl != null) {
+            mViewModel.loadNextTitlePageResults(nextPageUrl);
+        }
+    }
     private void doAnimeTitleSearch(String animeTitle){
         mViewModel.loadTitleSearchResults(animeTitle);
     }
+
 
 
 }

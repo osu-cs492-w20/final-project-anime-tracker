@@ -33,7 +33,7 @@ public class AnimeListViewModel extends AndroidViewModel {
         mRepository.updateAnimeEntry(entry);
     }
 
-    public LiveData<List<AnimeDatabaseEntry>> getAllAnimeListEnties() {
+    public LiveData<List<AnimeDatabaseEntry>> getAllAnimeListEntries() {
         return mRepository.getAllAnimeListEntries();
     }
 

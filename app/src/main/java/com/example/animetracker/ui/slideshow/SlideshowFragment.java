@@ -25,9 +25,14 @@ import com.example.animetracker.AnimeItemDetailActivity;
 import com.example.animetracker.AnimeSearchViewModel;
 import com.example.animetracker.R;
 import com.example.animetracker.data.AnimeItem;
+import com.example.animetracker.data.AnimeSearchPages;
 import com.example.animetracker.data.Status;
 import com.example.animetracker.ui.gallery.GalleryFragment;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import com.example.animetracker.utils.KitsuUtils;
+
 
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
     private static final String TAG = SlideshowFragment.class.getSimpleName();
 
     private SlideshowViewModel slideshowViewModel;
+
+
 
     private AnimeSearchViewModel mViewModel;
     private AnimeAdapter mAdapter;
@@ -44,10 +51,14 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
     private ProgressBar mLoadingIndicatorPB;
     private TextView mErrorMessageTV;
 
+    private AnimeSearchPages mPages;
+    private Button loadMoreButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
+        loadMoreButton = root.findViewById(R.id.btn_genre_load_more);
         mSearchBoxET = root.findViewById(R.id.et_genre_search_box);
         mSearchResultsRV = (RecyclerView) root.findViewById(R.id.rv_search_anime_genre);
 
@@ -62,7 +73,7 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
         mErrorMessageTV = root.findViewById(R.id.tv_genre_error_message);
 
         //mViewModel = new ViewModelProvider(this).get(AnimeSearchViewModel.class);
-        mViewModel = ViewModelProviders.of(this).get(AnimeSearchViewModel.class);
+        mViewModel = ViewModelProviders.of(getActivity()).get(AnimeSearchViewModel.class);
 
         mViewModel.getGenreSearchResults().observe(this, new Observer<List<AnimeItem>>() {
             @Override
@@ -71,19 +82,29 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
             }
         });
 
+        mViewModel.getGenreSearchPages().observe(this, new Observer<AnimeSearchPages>() {
+            @Override
+            public void onChanged(AnimeSearchPages searchPages) {
+                mPages = searchPages;
+            }
+        });
+
         mViewModel.getGenreSearchLoadingStatus().observe(this, new Observer<Status>() {
             @Override
             public void onChanged(Status status) {
                 if(status == Status.LOADING){
                     mLoadingIndicatorPB.setVisibility(View.VISIBLE);
+                    loadMoreButton.setVisibility(View.INVISIBLE);
                 } else if(status == Status.SUCCESS) {
                     mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
                     mSearchResultsRV.setVisibility(View.VISIBLE);
                     mErrorMessageTV.setVisibility(View.INVISIBLE);
+                    loadMoreButton.setVisibility(View.VISIBLE);
                 } else {
                     mLoadingIndicatorPB.setVisibility(View.INVISIBLE);
                     mSearchResultsRV.setVisibility(View.INVISIBLE);
                     mErrorMessageTV.setVisibility(View.VISIBLE);
+                    loadMoreButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -95,6 +116,21 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
                 String searchQuery = mSearchBoxET.getText().toString();
                 if(!TextUtils.isEmpty(searchQuery)){
                     doAnimeGenreSearch(searchQuery);
+                }
+            }
+        });
+
+        loadMoreButton = root.findViewById(R.id.btn_genre_load_more);
+        loadMoreButton.setVisibility(View.INVISIBLE);
+        loadMoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Load more anime");
+                if(mPages.next != null) {
+                    doAnimeGenreLoadMore(mPages.next);
+                } else{
+                    Snackbar.make(v, "No more results", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
             }
         });
@@ -114,5 +150,9 @@ public class SlideshowFragment extends Fragment implements AnimeAdapter.OnAnimeI
 
     private void doAnimeGenreSearch(String animeGenre){
         mViewModel.loadGenreSearchResults(animeGenre);
+    }
+
+    private void doAnimeGenreLoadMore(String nextPageUrl){
+        mViewModel.loadNextGenrePageResults(nextPageUrl);
     }
 }

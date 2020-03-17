@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 //import com.example.android.animetracker.utils.OpenWeatherMapUtils;
 
 import com.example.animetracker.data.AnimeItem;
+import com.example.animetracker.data.AnimeSearchPages;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeItemViewHolder> {
 
     private List<AnimeItem> mAnimeItems;
+    private AnimeSearchPages mNextPage;
     private OnAnimeItemClickListener mAnimeItemClickListener;
 
     public interface OnAnimeItemClickListener {

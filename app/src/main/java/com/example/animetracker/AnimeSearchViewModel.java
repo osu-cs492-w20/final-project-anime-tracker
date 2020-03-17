@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.animetracker.data.AnimeItem;
+import com.example.animetracker.data.AnimeSearchPages;
 import com.example.animetracker.data.KitsuSearchGenreRepository;
 import com.example.animetracker.data.KitsuSearchTitleRepository;
 import com.example.animetracker.data.Status;
@@ -18,18 +19,26 @@ public class AnimeSearchViewModel extends ViewModel {
     private LiveData<List<AnimeItem>> mTitleSearchResults;
     private LiveData<List<AnimeItem>> mGenreSearchResults;
 
+    private LiveData<AnimeSearchPages> mSearchTitlePages;
+    private LiveData<AnimeSearchPages> mSearchGenrePages;
+
     private LiveData<Status> mTitleSearchLoadingStatus;
     private LiveData<Status> mGenreSearchLoadingStatus;
 
     public AnimeSearchViewModel() {
         mSearchTitleRepository = new KitsuSearchTitleRepository();
         mSearchGenreRepository = new KitsuSearchGenreRepository();
-
         mTitleSearchResults = mSearchTitleRepository.getSearchTitleResults();
         mGenreSearchResults = mSearchGenreRepository.getSearchGenreResults();
-
         mTitleSearchLoadingStatus = mSearchTitleRepository.getLoadingTitleStatus();
         mGenreSearchLoadingStatus = mSearchGenreRepository.getLoadingGenreStatus();
+
+        mSearchTitlePages = mSearchTitleRepository.getSearchPages();
+        mSearchGenrePages = mSearchGenreRepository.getSearchPages();
+    }
+
+    public void loadNextTitlePageResults(String nextPageUrl){
+        mSearchTitleRepository.loadTitlePageSearch(nextPageUrl);
     }
 
     public void loadTitleSearchResults(String title){
@@ -40,6 +49,14 @@ public class AnimeSearchViewModel extends ViewModel {
         mSearchGenreRepository.loadGenreSearch(genre);
     }
 
+    public LiveData<AnimeSearchPages> getTitleSearchPages(){
+        return mSearchTitlePages;
+    }
+
+    public LiveData<AnimeSearchPages> getGenreSearchPages (){
+        return mSearchGenrePages;
+    }
+
     public LiveData<List<AnimeItem>> getTitleSearchResults(){
         return mTitleSearchResults;
     }
@@ -48,7 +65,7 @@ public class AnimeSearchViewModel extends ViewModel {
         return mGenreSearchResults;
     }
 
-    public LiveData<Status> getTitleSEarchLoadingStatus(){
+    public LiveData<Status> getTitleSearchLoadingStatus(){
         return mTitleSearchLoadingStatus;
     }
 

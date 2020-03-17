@@ -43,6 +43,9 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
     private TextView mEpisodeLengthTV;
     private TextView mYoutubeIDTV;
 
+    private TextView mDatabaseScoreTV;
+    private TextView mDatabaseWatchedTV;
+
     private AnimeItem mAnimeItem;
 
     private AnimeListViewModel mAnimeListViewModel;
@@ -66,6 +69,10 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
         mEpisodeCountTV = findViewById(R.id.tv_episode_count);
         mEpisodeLengthTV = findViewById(R.id.tv_episode_length);
         mYoutubeIDTV = findViewById(R.id.tv_youtube_id);
+
+        mDatabaseScoreTV = findViewById(R.id.tv_database_score);
+        mDatabaseWatchedTV = findViewById(R.id.tv_database_watched);
+
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(KitsuUtils.EXTRA_ANIME_ITEM)) {
@@ -235,6 +242,14 @@ public class AnimeItemDetailActivity extends AppCompatActivity{
 
         String animeSynopsisString = getString(R.string.anime_synopsis, animeItem.synopsis);
         mSynopsisTV.setText(animeSynopsisString);
+
+        String animeScoreString = getString(R.string.anime_score); //, String.valueOf(animeItem.));
+        mDatabaseScoreTV.setText(animeScoreString);
+
+        String animeWatchedString = getString(R.string.anime_watched); //, String.valueOf(animeItem.));
+        mDatabaseWatchedTV.setText(animeWatchedString);
+
+
 
     }
 }
